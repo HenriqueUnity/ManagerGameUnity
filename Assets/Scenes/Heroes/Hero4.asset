@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d93c05f84b7d8e94f81e0e969c18be11, type: 3}
-  m_Name: Hero1
+  m_Name: Hero4
   m_EditorClassIdentifier: 
-  power: 100
-  payday: 200
-  cost: 350
-  heroName: Minotauro
+  power: 800
+  payday: 1300
+  cost: 11000
+  heroName: Big Boss

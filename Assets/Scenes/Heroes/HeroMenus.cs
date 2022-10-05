@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class HeroMenus : MonoBehaviour
 {
     public  List<NewHero> hero=new List<NewHero>();
-    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt;
-
+    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt;
+    [SerializeField] bool inStore;
     void Start()
     {
        
@@ -22,9 +22,13 @@ public class HeroMenus : MonoBehaviour
 
         foreach(NewHero hero in hero)
         {
-            nametxt.text = "Nome: " + hero.heroName;
-           powertxt.text = "Poder: " + hero.power.ToString();
+            nametxt.text  = "Nome: " + hero.heroName;
+           powertxt.text  = "Poder: " + hero.power.ToString();
            paydaytxt.text = "Salário: " + hero.payday.ToString();
+            if (inStore)
+            {
+                costtxt.text = $"Valor: {hero.cost}";
+            }
         }
     }
     
