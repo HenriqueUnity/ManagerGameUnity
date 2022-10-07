@@ -15,4 +15,5 @@ MonoBehaviour:
   power: 100
   payday: 200
   cost: 350
+  fatigue: 1
   heroName: Minotauro
