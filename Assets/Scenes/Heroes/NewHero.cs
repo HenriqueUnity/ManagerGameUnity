@@ -5,7 +5,7 @@ using UnityEngine;
 public class NewHero : MonoBehaviour
 {
     [SerializeField] Heroes myHero;
-    public int power, payday,cost,fatigue;
+    public int power, payday, cost, fatigue, fatigue_max;
     public string heroName;
     [SerializeField] Main_Script main_Script;
     
@@ -20,10 +20,12 @@ public class NewHero : MonoBehaviour
         payday   = myHero.payday;
         heroName = myHero.heroName;
         cost     = myHero.cost;
+        fatigue_max = fatigue;
 
         
 
     }
+   
 
     public void ContractHero(NewHero hero)
     {
@@ -31,6 +33,13 @@ public class NewHero : MonoBehaviour
 
         main_Script.NewHero(hero,hero.cost);
         
+    }
+    public void checkFatigue()
+    {
+        if (fatigue > fatigue_max)
+        {
+            fatigue = fatigue_max;
+        }
     }
     
 }

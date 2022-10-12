@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66e62ee36c13eef4887961ffaefe9c6e, type: 3}
-  m_Name: 
+  m_Name: Local1
   m_EditorClassIdentifier: 
   crime: 400
   localName: Distrito Sul

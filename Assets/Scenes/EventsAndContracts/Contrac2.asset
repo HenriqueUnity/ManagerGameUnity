@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e62ee36c13eef4887961ffaefe9c6e, type: 3}
-  m_Name: Local2
+  m_Script: {fileID: 11500000, guid: 6925b6b970242cb48a2235504da68b4b, type: 3}
+  m_Name: Contrac2
   m_EditorClassIdentifier: 
-  crime: 500
-  localName: Beco escuro
+  moneycontract: 350
+  contractName: "Aux\xEDlio Heroi"
+  Isactive: 1
+  contractdescription:
+  - Verba governamental
+  - 'redirecionada para '
+  - o combate o crime.

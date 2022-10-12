@@ -2,16 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Main_Script : MonoBehaviour
 {
-    private int day, money, crime, heropower, totalpayday;
-
-    public List<NewHero>   myHeroes    = new();
-    [SerializeField] List<HeroMenus> myHeroMenus = new();
-    [SerializeField] TextMeshProUGUI diatxt, heropowertxt, moneytxt;
+    public int day;
+    private int  money, crime, heropower, totalpayday;
     public  Main_Script instance;
+    [SerializeField] string scenename;
+    [SerializeField] TextMeshProUGUI diatxt, heropowertxt, moneytxt;
+    private NewHero hero1;
+    [SerializeField] Button nextday_button;
+    [SerializeField] GameObject[] localPanel;
+
+    [Header("Lists")]
     [SerializeField] List<Locals_mainscript> mylocals = new();
+    [SerializeField] List<HeroMenus> myHeroMenus = new();
+    public List<NewContract> contracts = new();
+    public List<NewHero>   myHeroes    = new();
+    
 
     private void Start()
     {
@@ -24,12 +34,12 @@ public class Main_Script : MonoBehaviour
         instance = this;
         }
 
-     DontDestroyOnLoad(gameObject); 
-
-        money = 50000;
-               
-           
      
+
+        money = 10000;
+
+
+        day = 1;
 
     }
     private void Update()
@@ -41,26 +51,63 @@ public class Main_Script : MonoBehaviour
 
     public void TotalCrime()
         {
-        //TODO sistema crime
+
+
+        for (int i = 0; i < mylocals.Count; i++)
+        {
+           hero1 = mylocals[i].herotofight;
+            if (hero1 != null)
+            {
+                mylocals[i].StartCrimeFight(hero1);
+            }
+            //mylocals[i].localcrime = mylocals[i].localcrime + 100;
+            //float random =Random.Range(1, 6);
+            //if(random>3)
+            //{
+            //    mylocals[i].localcrime += 100;
+            //    Debug.Log(random);
+            //}
+
+            mylocals[i].herotofight = null;
+                hero1               = null;
         }
+    }
     public void TotalEconomy()
         {
-        //TODO sistema dinheiro
+        money -= totalpayday;
+       for(int i=0; i<contracts.Count; i++)
+        {
+            if (contracts[i]._contractactive == true)
+            {
+                money += contracts[i]._contractmoney;
+            }
+            
         }
+        if (money < 0)
+        {
+            NoMoneyGameOver();
+        }
+
+    }
     public void NextDay()
         {
         day++;
-        money -= totalpayday;
-
+       
         for(int i = 0; i < myHeroes.Count; i++)
         {
             myHeroes[i].fatigue=myHeroes[i].fatigue+1;
+            myHeroes[i].checkFatigue();
         }
-       for(int i = 0; i < mylocals.Count; i++)
-        {
-            mylocals[i].localcrime =mylocals[i].localcrime+100;
-        }
-        }
+        TotalEconomy(); 
+          TotalCrime();
+
+        nextday_button.interactable = false;
+
+        StartCoroutine(ButtonHide());
+
+
+
+    }
     public void NewHero(NewHero hero,int herocost)
     {
         myHeroes.Add(hero);
@@ -76,6 +123,19 @@ public class Main_Script : MonoBehaviour
                 
                 break;
             }
+        }
+    }
+    private void NoMoneyGameOver()
+    {
+        SceneManager.LoadScene(scenename);
+    }
+    IEnumerator ButtonHide()
+    {
+        yield return new WaitForSeconds(1f);
+        nextday_button.interactable =true;
+        for (int i = 0; i < localPanel.Length; i++)
+        {
+            localPanel[i].SetActive(false);
         }
     }
 }
