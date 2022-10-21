@@ -6,11 +6,13 @@ using UnityEngine;
 public class EventCrime : MonoBehaviour,IEventInterface
 
 {
-    [SerializeField] CrimeDayEvent _CrimeDayEvent;
-    [SerializeField] GameObject EventPanel;
+    [SerializeField] CrimeDayEvent _CrimeDayEvent;    
     [SerializeField] Locals_mainscript mylocals;
     [SerializeField] TextMeshProUGUI eventNametxt, desctxt;
-    public int       crimeIncreased, id;
+    public int                   id;
+    private int      crimeIncreased;
+
+    [Header("Text Elements")]
     public string    description, eventName;
 
     void Start()
@@ -21,7 +23,7 @@ public class EventCrime : MonoBehaviour,IEventInterface
         eventName      = _CrimeDayEvent.eventName;
     }
 
-    public void CrimeIncreased()
+    public void StatusIncreased()
     {
 
         mylocals.localcrime += crimeIncreased;

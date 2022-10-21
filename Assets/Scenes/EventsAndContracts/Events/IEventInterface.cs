@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEventInterface 
 {
-    void CrimeIncreased();
+    void StatusIncreased();
     void OpenPanel(GameObject t);
     
 

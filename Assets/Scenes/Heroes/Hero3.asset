@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93c05f84b7d8e94f81e0e969c18be11, type: 3}
   m_Name: Hero3
   m_EditorClassIdentifier: 
+  id: 3
   power: 300
   payday: 500
   cost: 1200
   fatigue: 1
+  fatiguemax: 0
   heroName: Morte Estelar

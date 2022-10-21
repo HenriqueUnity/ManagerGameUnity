@@ -75,6 +75,7 @@ public class HeroMenus : MonoBehaviour
                     hero = main_Script.instance.myHeroes[0];
                     i++;
                     _LocalHero.GetHero(hero);
+                    _LocalHero.heroid = _LocalHero.GetId();
                 }
                 break;
             case 1 :
@@ -83,6 +84,7 @@ public class HeroMenus : MonoBehaviour
                     hero = main_Script.instance.myHeroes[1];
                     i++;
                     _LocalHero.GetHero(hero);
+                    _LocalHero.heroid = _LocalHero.GetId();
                     if (main_Script.instance.myHeroes.Count == 2) 
                     {
                         i = 0;
@@ -98,6 +100,7 @@ public class HeroMenus : MonoBehaviour
                     hero = main_Script.instance.myHeroes[2];
                     i++;
                     _LocalHero.GetHero(hero);
+                    _LocalHero.heroid = _LocalHero.GetId();
                     if (main_Script.instance.myHeroes.Count == 3) 
                     {
                         i = 0;
@@ -114,6 +117,7 @@ public class HeroMenus : MonoBehaviour
                     hero = main_Script.instance.myHeroes[3];
                     i++;
                     _LocalHero.GetHero(hero);
+                    _LocalHero.heroid = _LocalHero.GetId();
                     if (main_Script.instance.myHeroes.Count == 4) 
                     {
                         i = 0;

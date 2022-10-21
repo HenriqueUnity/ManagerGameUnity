@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class LocalHero : MonoBehaviour
 {
-    [SerializeField] NewHero localhero1;
+    public NewHero localhero1;
     [SerializeField] GameObject chooseMenus;
+    public int heroid;
     
-    private void Awake()
-    {
-      
-        
-    }
+  
     public void GetHero(NewHero localhero)
     {
         localhero1 = localhero;
@@ -19,7 +16,14 @@ public class LocalHero : MonoBehaviour
     }   
     public NewHero SetHero()
     {
+        
         return localhero1;
+    }
+    public int GetId()
+    {
+        heroid = localhero1.Id;
+
+        return heroid;
     }
 
     public void ChooseHero()
@@ -39,6 +43,11 @@ public class LocalHero : MonoBehaviour
     public void HeroChoose(NewHero hero)
     {
         localhero1 = hero;   
+    }
+    public void ResetHero()
+    {
+         localhero1 = null;
+             heroid = 0;
     }
     
 }

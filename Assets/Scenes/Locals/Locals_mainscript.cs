@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Locals_mainscript : MonoBehaviour
 {
-    public NewHero herotofight;
+    
     [SerializeField]NewLocals mylocal;
     public int localcrime;
     [SerializeField] TextMeshProUGUI crimetxt, nametxt;
-    private LocalHero myLocalhero;
+    public LocalHero myLocalhero;
     bool firststart=true;
     [SerializeField] GameObject messageerro;
     [SerializeField] RectTransform posicaomensagem;
-    [SerializeField] Locals_mainscript[] checkOtherLocals;
+
     
     
-   
+
 
     void Start()
     {
@@ -37,28 +38,14 @@ public class Locals_mainscript : MonoBehaviour
        
     }
     //Set do hero que vai lutar no local
-    public void SetHero()
-    { 
-            herotofight = myLocalhero.SetHero();
-        for (int i = 0; i < checkOtherLocals.Length; i++)
-        {
+    public NewHero SetHero()
+    {
 
-        }
+
+       return myLocalhero.SetHero();
         
-        {
-        if (herotofight == null)
-         {
-            Instantiate(messageerro,posicaomensagem);
-                
-         }
-        //else if (herotofight.fatigue >= 1)
-        //     {
-        //        StartCrimeFight(herotofight);
-        //     }
-        }
-        
-    }
-   
+
+    }  
     //Crime - HeroPower
     public void StartCrimeFight(NewHero herotofight)
     {
@@ -68,5 +55,9 @@ public class Locals_mainscript : MonoBehaviour
         {
             localcrime = 0;
         }
+    }
+   public void CallSetHero()
+    {
+        SetHero();
     }
 }

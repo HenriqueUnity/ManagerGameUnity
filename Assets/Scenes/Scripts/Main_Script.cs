@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Main_Script : MonoBehaviour
 {
@@ -15,13 +16,18 @@ public class Main_Script : MonoBehaviour
     private NewHero hero1;
     [SerializeField] Button nextday_button;
     [SerializeField] GameObject[] localPanel;
+    [SerializeField] GameObject EventPanel;
+    private bool repeathero, repeathero1, repeathero2, repeathero3;
 
     [Header("Lists")]
     [SerializeField] List<Locals_mainscript> mylocals = new();
-    [SerializeField] List<HeroMenus> myHeroMenus = new();
-    public List<NewContract> contracts = new();
-    public List<NewHero>   myHeroes    = new();
-    
+    [SerializeField] List<HeroMenus> myHeroMenus      = new();
+    [SerializeField] List<EventCrime> myEventsCrime   = new();
+    public List<NewContract> contracts                = new();
+    public List<NewHero>   myHeroes                   = new();
+    private List<int> MyIds                           = new();
+
+
 
     private void Start()
     {
@@ -47,29 +53,45 @@ public class Main_Script : MonoBehaviour
         diatxt.text   = $"Dia: {day}";
         moneytxt.text = $"Dinheiro: {money}";
         heropowertxt.text = $"Poder: {heropower}";
+
+        if(day == 7 )
+        {
+            for (int i = 0; i <myEventsCrime.Count; i++)
+            {
+              bool eventStart  = myEventsCrime[i].id == 1;
+                if(eventStart)
+                {
+                    {
+                        myEventsCrime[i].OpenPanel(EventPanel);
+                        myEventsCrime[i].StatusIncreased();
+                    } }
+            }
+        }
+        
     }
 
     public void TotalCrime()
         {
 
-
+        
         for (int i = 0; i < mylocals.Count; i++)
         {
-           hero1 = mylocals[i].herotofight;
+           hero1 = mylocals[i].SetHero();
             if (hero1 != null)
             {
                 mylocals[i].StartCrimeFight(hero1);
+                
             }
-            //mylocals[i].localcrime = mylocals[i].localcrime + 100;
-            //float random =Random.Range(1, 6);
-            //if(random>3)
-            //{
-            //    mylocals[i].localcrime += 100;
-            //    Debug.Log(random);
-            //}
+            mylocals[i].localcrime = mylocals[i].localcrime + 100;
+            float random = Random.Range(1, 6);
+            if (random > 3)
+            {
+                mylocals[i].localcrime += 100;
 
-            mylocals[i].herotofight = null;
-                hero1               = null;
+            }
+
+
+            hero1 = default;
         }
     }
     public void TotalEconomy()
@@ -91,23 +113,33 @@ public class Main_Script : MonoBehaviour
     }
     public void NextDay()
         {
+
+        //check if can pass the day//
+        bool AbletoNextDay = CheckIDS();
+        Debug.Log(AbletoNextDay);
+        if (AbletoNextDay != false)
+        {
+            ResetAllLocalhero();
+            return;
+        }
+        ////////////////////////////
         day++;
        
-        for(int i = 0; i < myHeroes.Count; i++)
-        {
-            myHeroes[i].fatigue=myHeroes[i].fatigue+1;
-            myHeroes[i].checkFatigue();
-        }
+        //Todo fatigue system new method
+      
         TotalEconomy(); 
           TotalCrime();
 
+        //Nextday Button hide for a moment
         nextday_button.interactable = false;
-
         StartCoroutine(ButtonHide());
+        /////
 
 
 
     }
+
+    //hero bought in store move to this script List<>//
     public void NewHero(NewHero hero,int herocost)
     {
         myHeroes.Add(hero);
@@ -125,6 +157,8 @@ public class Main_Script : MonoBehaviour
             }
         }
     }
+
+    // player economy game over//
     private void NoMoneyGameOver()
     {
         SceneManager.LoadScene(scenename);
@@ -138,4 +172,59 @@ public class Main_Script : MonoBehaviour
             localPanel[i].SetActive(false);
         }
     }
+    private void ResetAllLocalhero()
+    {
+        for (int i = 0; i < mylocals.Count; i++)
+        {
+            mylocals[i].myLocalhero.ResetHero();
+        }
+    }
+
+    //chech IDs for repeat heros in locals //
+    private bool CheckIDS()
+    {
+
+        if (MyIds.Count == 0)
+        {
+            //check ids 
+            foreach (Locals_mainscript localhero in mylocals)
+            {
+                if (localhero.myLocalhero.heroid == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    MyIds.Add(localhero.myLocalhero.heroid);
+                }
+            }
+            switch (MyIds.Count)
+            {              
+                case 2:
+                     repeathero = Enumerable.Equals(MyIds[0], MyIds[1]);
+                            break;
+                case 3:
+                     repeathero3 = Enumerable.Equals(MyIds[0], MyIds[1]);
+                     repeathero1 = Enumerable.Equals(MyIds[1], MyIds[2]);
+                     repeathero2 = Enumerable.Equals(MyIds[2], MyIds[0]);
+                            break;
+                default:
+                    MyIds.Clear();  
+                    return false;                            
+             }
+            if (repeathero || repeathero1 || repeathero2 || repeathero3)
+
+            {
+                MyIds.Clear();
+                return true;
+            }
+            else return false;
+        }
+        
+        MyIds.Clear();
+
+        return true;
+    }
+    
 }
+

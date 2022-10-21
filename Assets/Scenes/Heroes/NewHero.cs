@@ -5,7 +5,7 @@ using UnityEngine;
 public class NewHero : MonoBehaviour
 {
     [SerializeField] Heroes myHero;
-    public int power, payday, cost, fatigue, fatigue_max;
+    public int power, payday, cost, fatigue, fatigue_max,Id;
     public string heroName;
     [SerializeField] Main_Script main_Script;
     
@@ -20,7 +20,8 @@ public class NewHero : MonoBehaviour
         payday   = myHero.payday;
         heroName = myHero.heroName;
         cost     = myHero.cost;
-        fatigue_max = fatigue;
+     fatigue_max = fatigue;
+        Id       = myHero.id;
 
         
 
