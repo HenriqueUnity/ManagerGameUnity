@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 
-public class HeroMenus : MonoBehaviour
+public class HeroChooseMenus : MonoBehaviour
 {
     public NewHero hero;
-    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt;
-    [SerializeField] bool inStore;
+    [SerializeField] TextMeshProUGUI nametxt, powertxt;
+    //[SerializeField] bool inStore;
     public bool checkhero;
     private Main_Script main_Script;
-    private int i=0;
-    [SerializeField]LocalHero _LocalHero;
+    private int i = 0;
+    public LocalHero _LocalHero;
     void Start()
     {
-      
-       if(inStore)
-        {
-            checkhero=true; 
-        }
+
+        //if (inStore)
+        //{
+        //    checkhero = true;
+        //}
         main_Script = FindObjectOfType<Main_Script>();
         _LocalHero = GetComponentInParent<LocalHero>();
-        
+
     }
 
 
@@ -48,73 +47,80 @@ public class HeroMenus : MonoBehaviour
         {
             nametxt.text = "Nome: " + hero.heroName;
             powertxt.text = "Poder: " + hero.power.ToString();
-            paydaytxt.text = "Salário: " + hero.payday.ToString();
-            if (inStore)
-            {
-                costtxt.text = $"Valor: {hero.cost}";
-            }
+            //paydaytxt.text = "Salário: " + hero.payday.ToString();
+            //if (inStore)
+            //{
+            //    costtxt.text = $"Valor: {hero.cost}";
+            //}
         }
         else
         {
-            nametxt.text   = " ";
-            powertxt.text  = " ";
-            paydaytxt.text = " ";
+            nametxt.text = "Nome: ";
+            powertxt.text = "Poder: ";
+            
         }
 
     }
 
-          public void NewHeroStats(NewHero newhero)
-            {
-            hero = newhero;
-            checkhero = true;
-            }
+    public void NewHeroStats(NewHero newhero)
+    {
+        hero = newhero;
+        checkhero = true;
+    }
+    public void ResetHeroStats()
+    {
+        hero = null;
+        nametxt.text = "Nome: ";
+        powertxt.text = "Poder: ";
 
-           public void NewHeroChoose()
-            {
-                    
-        switch(i)
+    }
 
-            {
-            case 0 :
+    public void NewHeroChoose()
+    {
+
+        switch (i)
+
+        {
+            case 0:
                 if (main_Script.instance.myHeroes.Any())
-                {                                                  
+                {
                     hero = main_Script.instance.myHeroes[0];
                     i++;
                     _LocalHero.GetHero(hero);
                     _LocalHero.heroid = _LocalHero.GetId();
                 }
                 break;
-            case 1 :
-                if (main_Script.instance.myHeroes.Count>1)
+            case 1:
+                if (main_Script.instance.myHeroes.Count > 1)
                 {
                     hero = main_Script.instance.myHeroes[1];
                     i++;
                     _LocalHero.GetHero(hero);
                     _LocalHero.heroid = _LocalHero.GetId();
-                    if (main_Script.instance.myHeroes.Count == 2) 
-                    {
-                        i = 0;
-                    }
-                }
-                else
-                    i = 0;  
-               
-                break;
-            case 2 :
-                if (main_Script.instance.myHeroes.Count > 2)
-                {
-                    hero = main_Script.instance.myHeroes[2];
-                    i++;
-                    _LocalHero.GetHero(hero);
-                    _LocalHero.heroid = _LocalHero.GetId();
-                    if (main_Script.instance.myHeroes.Count == 3) 
+                    if (main_Script.instance.myHeroes.Count == 2)
                     {
                         i = 0;
                     }
                 }
                 else
                     i = 0;
-                
+
+                break;
+            case 2:
+                if (main_Script.instance.myHeroes.Count > 2)
+                {
+                    hero = main_Script.instance.myHeroes[2];
+                    i++;
+                    _LocalHero.GetHero(hero);
+                    _LocalHero.heroid = _LocalHero.GetId();
+                    if (main_Script.instance.myHeroes.Count == 3)
+                    {
+                        i = 0;
+                    }
+                }
+                else
+                    i = 0;
+
 
                 break;
             case 3:
@@ -124,22 +130,22 @@ public class HeroMenus : MonoBehaviour
                     i++;
                     _LocalHero.GetHero(hero);
                     _LocalHero.heroid = _LocalHero.GetId();
-                    if (main_Script.instance.myHeroes.Count == 4) 
+                    if (main_Script.instance.myHeroes.Count == 4)
                     {
                         i = 0;
                     }
                 }
                 else
                     i = 0;
-                 
+
                 break;
 
-             }
-           
-           }
+        }
 
-   
-    
+    }
+
+
+
 }
 
 

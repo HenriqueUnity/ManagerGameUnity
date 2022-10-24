@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Contrac2
   m_EditorClassIdentifier: 
   moneycontract: 350
+  ID: 2
   contractName: "Aux\xEDlio Heroi"
-  Isactive: 1
-  contractdescription:
-  - Verba governamental
-  - 'redirecionada para '
-  - o combate o crime.
+  Isactive: 0
+  contractdescription: Verba governamental para todos os homens e mulheres de capa!!

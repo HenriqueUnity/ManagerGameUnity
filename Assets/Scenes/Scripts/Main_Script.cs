@@ -8,21 +8,21 @@ using System.Linq;
 
 public class Main_Script : MonoBehaviour
 {
-    public int day;
-    private int  money, crime, heropower, totalpayday;
+    public int day, money;
+    private int   heropower, totalpayday;
     public  Main_Script instance;
     [SerializeField] string scenename;
     [SerializeField] TextMeshProUGUI diatxt, heropowertxt, moneytxt;
     private NewHero hero1;
     [SerializeField] Button nextday_button;
     [SerializeField] GameObject[] localPanel;
-    [SerializeField] GameObject EventPanel;
+    [SerializeField] EventManager eventManager; 
+    
     private bool repeathero, repeathero1, repeathero2, repeathero3;
 
     [Header("Lists")]
     [SerializeField] List<Locals_mainscript> mylocals = new();
     [SerializeField] List<HeroMenus> myHeroMenus      = new();
-    [SerializeField] List<EventCrime> myEventsCrime   = new();
     public List<NewContract> contracts                = new();
     public List<NewHero>   myHeroes                   = new();
     private List<int> MyIds                           = new();
@@ -54,19 +54,7 @@ public class Main_Script : MonoBehaviour
         moneytxt.text = $"Dinheiro: {money}";
         heropowertxt.text = $"Poder: {heropower}";
 
-        if(day == 7 )
-        {
-            for (int i = 0; i <myEventsCrime.Count; i++)
-            {
-              bool eventStart  = myEventsCrime[i].id == 1;
-                if(eventStart)
-                {
-                    {
-                        myEventsCrime[i].OpenPanel(EventPanel);
-                        myEventsCrime[i].StatusIncreased();
-                    } }
-            }
-        }
+       
         
     }
 
@@ -94,9 +82,14 @@ public class Main_Script : MonoBehaviour
             hero1 = default;
         }
     }
+
+
+    //Increased and Decreased money//
     public void TotalEconomy()
         {
         money -= totalpayday;
+
+
        for(int i=0; i<contracts.Count; i++)
         {
             if (contracts[i]._contractactive == true)
@@ -117,6 +110,7 @@ public class Main_Script : MonoBehaviour
         //check if can pass the day//
         bool AbletoNextDay = CheckIDS();
         Debug.Log(AbletoNextDay);
+        
         if (AbletoNextDay != false)
         {
             ResetAllLocalhero();
@@ -124,12 +118,13 @@ public class Main_Script : MonoBehaviour
         }
         ////////////////////////////
         day++;
+        eventManager.EventController(day);
        
         //Todo fatigue system new method
       
         TotalEconomy(); 
           TotalCrime();
-
+        ResetAllLocalhero();
         //Nextday Button hide for a moment
         nextday_button.interactable = false;
         StartCoroutine(ButtonHide());
@@ -138,6 +133,8 @@ public class Main_Script : MonoBehaviour
 
 
     }
+
+    
 
     //hero bought in store move to this script List<>//
     public void NewHero(NewHero hero,int herocost)
@@ -177,6 +174,7 @@ public class Main_Script : MonoBehaviour
         for (int i = 0; i < mylocals.Count; i++)
         {
             mylocals[i].myLocalhero.ResetHero();
+            mylocals[i].chooseMenu.ResetHeroStats();    
         }
     }
 
@@ -218,7 +216,10 @@ public class Main_Script : MonoBehaviour
                 MyIds.Clear();
                 return true;
             }
-            else return false;
+
+            else
+
+                return false;
         }
         
         MyIds.Clear();

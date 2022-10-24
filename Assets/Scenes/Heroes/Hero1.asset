@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hero1
   m_EditorClassIdentifier: 
   id: 1
-  power: 100
+  power: 110
   payday: 200
   cost: 350
   fatigue: 1

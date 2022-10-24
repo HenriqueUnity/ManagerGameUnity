@@ -14,6 +14,7 @@ public class Locals_mainscript : MonoBehaviour
     bool firststart=true;
     [SerializeField] GameObject messageerro;
     [SerializeField] RectTransform posicaomensagem;
+    public HeroChooseMenus chooseMenu;
 
     
     
@@ -22,7 +23,7 @@ public class Locals_mainscript : MonoBehaviour
     void Start()
     {
         myLocalhero = GetComponentInChildren<LocalHero>();    
-
+        
     }
 
     
@@ -58,6 +59,6 @@ public class Locals_mainscript : MonoBehaviour
     }
    public void CallSetHero()
     {
-        SetHero();
+        myLocalhero.localhero1 = SetHero(); 
     }
 }

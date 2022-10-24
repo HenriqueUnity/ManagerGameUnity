@@ -2,41 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class NewContract : MonoBehaviour
+public class NewContract : MonoBehaviour, IEventInterface
 {
     [SerializeField] Contract myContract;
-    public string _contractname,completdescp;
-    public int _contractmoney;
-    public bool _contractactive;
-    public string[] _contractdescription;
-    private int contractsize;
+    [SerializeField] GameObject panel;
+    [SerializeField] TextMeshProUGUI contractname,contractDesc,contractValue;
+    //Main_Script myMainscript;
+    public string _contractname;
+    public int _contractmoney,ID;
+    public bool _contractactive,contractAlreadyTaken;
+    public string _contractdescription;
+
     
-    
+
+
+
     void Start()
     {
+
+       // myMainscript         = FindObjectOfType<Main_Script>();
+        ID                   = myContract.ID;
         _contractmoney       = myContract.moneycontract;
         _contractname        = myContract.contractName;
         _contractactive      = myContract.Isactive;
-        contractsize         = myContract.contractdescription.Length;
-        _contractdescription = new string[contractsize];    
-        _contractactive      = false;
+        _contractdescription = myContract.contractdescription;
         
-        for(int i = 0; i < myContract.contractdescription.Length; i++)
-            {
-            _contractdescription[i] = myContract.contractdescription[i];
-        }
-        foreach (string contracstring in _contractdescription)
-        {
-            completdescp += " " + contracstring;
-        }
-       
+        
+
+
+
     }
-    public void AcceptContract()
+    
+    public void StatusIncreased()
     {
-        _contractactive=true;
+       _contractactive = true;
     }
 
+    public void OpenPanel(GameObject t)
+    {
+        panel.SetActive(true);
+        contractname.text  = _contractname;
+        contractDesc.text  = _contractdescription;
+        contractValue.text = $"Valor:{_contractmoney}";
+        
+    }
 }
     

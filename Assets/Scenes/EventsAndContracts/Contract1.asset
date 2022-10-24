@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6925b6b970242cb48a2235504da68b4b, type: 3}
   m_Name: Contract1
   m_EditorClassIdentifier: 
-  moneycontract: 450
-  contractName: Iniciativa Defensores
-  Isactive: 0
-  contractdescription:
-  - "J\xE1 ouviu falar"
-  - da iniciativa defensores?
+  moneycontract: 100
+  ID: 1
+  contractName: "A\xE7\xF5es da Companhia"
+  Isactive: 1
+  contractdescription: "O mercado de a\xE7\xF5es ta no Hype!!!"

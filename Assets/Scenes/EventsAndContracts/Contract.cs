@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Contract",menuName ="New Contract/contract")]
 public class Contract : ScriptableObject
 {
-    public int moneycontract;
+    public int moneycontract,ID;
     public string contractName;
     public bool Isactive=false;
-    public string[] contractdescription;
+    public string contractdescription;
    
     
 }

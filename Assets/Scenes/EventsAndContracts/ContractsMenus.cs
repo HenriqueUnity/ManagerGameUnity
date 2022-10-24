@@ -1,39 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ContractsMenus : MonoBehaviour
 {
-    private Main_Script _mainscript;
+    [SerializeField] Main_Script _mainscript;
+    private int loopController;
 
-    [SerializeField] TextMeshProUGUI[] contranametxt, contractmoneytxt, contractdesctxt;
+    [SerializeField] TextMeshProUGUI contranametxt, contractmoneytxt, contractdesctxt;
     private List<NewContract> contracts = new();
    
   
     void Start()
     {
-        _mainscript = FindObjectOfType<Main_Script>();
+        
 
+      UpdateNewContract();  
+        MyNextContract(); 
+    }
+    
+    public void  UpdateNewContract()
+    {
         for (int i = 0; i < _mainscript.contracts.Count; i++)
         {
-            contracts.Add(_mainscript.contracts[i]);
-        }
-
-    }
-    private void Update()
-    {
-        for (int i = 0; i < contracts.Count; i++)
+        if (_mainscript.contracts[i]._contractactive && _mainscript.contracts[i].contractAlreadyTaken == false)
         {
-            contranametxt[i].text = contracts[i]._contractname;
-            contractdesctxt[i].text = "\tDescrição:\n " + contracts[i].completdescp;
-            contractmoneytxt[i].text = "Ganhos por dia: " + contracts[i]._contractmoney;
-            
-
+         _mainscript.contracts[i].contractAlreadyTaken = true;
+         contracts.Add(_mainscript.contracts[i]);
         }
+        }
+    }
+
+    public void MyNextContract()
+    {
+     contranametxt.text = contracts[loopController]._contractname;
+     contractdesctxt.text = "\tDescrição:\n " + contracts[loopController]._contractdescription;
+     contractmoneytxt.text = "Ganhos por dia: " + contracts[loopController]._contractmoney;
+     loopController++;
+      
+        if(contracts.Count == 1)
+        {
+          loopController =0;
+        }
+        if(loopController > contracts.Count)
+        {
+            loopController = 0; 
+        }
+        if(loopController == contracts.Count)
+        {
+            loopController = 0;
+        }
+
         
     }
-
+    //TODO trocar botão de aceitar para o event panel
     
 
 }
