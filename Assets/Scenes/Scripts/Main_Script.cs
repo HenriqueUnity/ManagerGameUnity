@@ -8,15 +8,28 @@ using System.Linq;
 
 public class Main_Script : MonoBehaviour
 {
-    public int day, money;
-    private int   heropower, totalpayday;
     public  Main_Script instance;
-    [SerializeField] string scenename;
-    [SerializeField] TextMeshProUGUI diatxt, heropowertxt, moneytxt;
     private NewHero hero1;
-    [SerializeField] Button nextday_button;
+
+    [Header("Resources Variables")]
+    public int day, money,fame;
+    public int heropower, totalpayday;
+
+    [Header("Report Variables")]
+    public int ReportMoney, contractsTotalMoney;
+
+    [Header("Strings And Text")]
+    [SerializeField] string scenename;
+    [SerializeField] TextMeshProUGUI diatxt, moneytxt,fameTxt;
+
+    [Header("GameObjects")]
+    [SerializeField] Button[] buttons;
     [SerializeField] GameObject[] localPanel;
-    [SerializeField] EventManager eventManager; 
+    [SerializeField] EventManager eventManager;
+    [SerializeField] ContractsMenus MycontractMenu;
+    [SerializeField] GameObject ReportPanel;
+    [SerializeField] StoreManager storeManager;
+    
     
     private bool repeathero, repeathero1, repeathero2, repeathero3;
 
@@ -51,8 +64,8 @@ public class Main_Script : MonoBehaviour
     private void Update()
     {
         diatxt.text   = $"Dia: {day}";
-        moneytxt.text = $"Dinheiro: {money}";
-        heropowertxt.text = $"Poder: {heropower}";
+        moneytxt.text = $"Economia: {money}";
+        fameTxt.text = $"Fama: {fame}";
 
        
         
@@ -64,19 +77,22 @@ public class Main_Script : MonoBehaviour
         
         for (int i = 0; i < mylocals.Count; i++)
         {
+
+            //crime decreased 
            hero1 = mylocals[i].SetHero();
             if (hero1 != null)
             {
                 mylocals[i].StartCrimeFight(hero1);
                 
             }
-            mylocals[i].localcrime = mylocals[i].localcrime + 100;
-            float random = Random.Range(1, 6);
-            if (random > 3)
-            {
-                mylocals[i].localcrime += 100;
+            //crime incresead for each day
+           // mylocals[i].localcrime = mylocals[i].localcrime + 100;
+            //float random = Random.Range(1, 6);
+            //if (random > 3)
+            //{
+            //    mylocals[i].localcrime += 100;
 
-            }
+            //}
 
 
             hero1 = default;
@@ -87,6 +103,9 @@ public class Main_Script : MonoBehaviour
     //Increased and Decreased money//
     public void TotalEconomy()
         {
+        contractsTotalMoney = 0;
+        ReportMoney = money;
+
         money -= totalpayday;
 
 
@@ -95,6 +114,7 @@ public class Main_Script : MonoBehaviour
             if (contracts[i]._contractactive == true)
             {
                 money += contracts[i]._contractmoney;
+                contractsTotalMoney += contracts[i]._contractmoney;
             }
             
         }
@@ -118,7 +138,7 @@ public class Main_Script : MonoBehaviour
         }
         ////////////////////////////
         day++;
-        eventManager.EventController(day);
+        
        
         //Todo fatigue system new method
       
@@ -126,11 +146,11 @@ public class Main_Script : MonoBehaviour
           TotalCrime();
         ResetAllLocalhero();
         //Nextday Button hide for a moment
-        nextday_button.interactable = false;
+        
         StartCoroutine(ButtonHide());
         /////
 
-
+        storeManager.CheckDay(day);
 
     }
 
@@ -143,6 +163,12 @@ public class Main_Script : MonoBehaviour
         money       -= herocost;
         heropower   += hero.power;
         totalpayday += hero.payday;
+        fame        += hero.fame;
+        storeManager.heroCount++;
+        CheckContractUpgrades();
+        //MycontractMenu.MyNextContract();
+        
+
         for(int i=0;i<myHeroMenus.Count;i++)
         {
             if (myHeroMenus[i].checkhero == false)
@@ -163,11 +189,14 @@ public class Main_Script : MonoBehaviour
     IEnumerator ButtonHide()
     {
         yield return new WaitForSeconds(1f);
-        nextday_button.interactable =true;
+        GetComponent<ButtonsHide>().HideButtons();
+
         for (int i = 0; i < localPanel.Length; i++)
         {
             localPanel[i].SetActive(false);
         }
+        ReportPanel.SetActive(true);
+        ReportPanel.GetComponentInChildren<ReportScript>().ReportStats();
     }
     private void ResetAllLocalhero()
     {
@@ -189,17 +218,20 @@ public class Main_Script : MonoBehaviour
             {
                 if (localhero.myLocalhero.heroid == 0)
                 {
+                    localhero.noheroReport = true;
                     continue;
                 }
                 else
                 {
                     MyIds.Add(localhero.myLocalhero.heroid);
+                    localhero.noheroReport = false; 
                 }
             }
             switch (MyIds.Count)
             {              
                 case 2:
                      repeathero = Enumerable.Equals(MyIds[0], MyIds[1]);
+                    MyIds.Clear();
                             break;
                 case 3:
                      repeathero3 = Enumerable.Equals(MyIds[0], MyIds[1]);
@@ -218,14 +250,26 @@ public class Main_Script : MonoBehaviour
             }
 
             else
-
+                MyIds.Clear();  
                 return false;
         }
         
         MyIds.Clear();
 
-        return true;
+        return false;
     }
-    
+
+    //check contract levels and the fame for upgrade//
+    public void CheckContractUpgrades()
+    {
+        for(int i = 0; i < contracts.Count; i++)
+        {           
+             contracts[i].UpgradeCheck(fame);
+        }
+    }
+    public void EventsDayckeck()
+    {
+        eventManager.EventController(day);
+    }
 }
 

@@ -16,6 +16,5 @@ MonoBehaviour:
   power: 110
   payday: 200
   cost: 350
-  fatigue: 1
-  fatiguemax: 0
+  fame: 55
   heroName: Felinista

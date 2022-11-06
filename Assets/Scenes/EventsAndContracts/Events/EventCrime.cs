@@ -8,7 +8,8 @@ public class EventCrime : MonoBehaviour,IEventInterface
 {
     [SerializeField] CrimeDayEvent _CrimeDayEvent;    
     [SerializeField] Locals_mainscript mylocals;
-    [SerializeField] TextMeshProUGUI eventNametxt, desctxt;
+    [SerializeField] TextMeshProUGUI eventNametxt, desctxt,crimetxt;
+    [SerializeField] GameObject heroSelectButton;
     public int                   id;
     private int      crimeIncreased;
 
@@ -27,7 +28,10 @@ public class EventCrime : MonoBehaviour,IEventInterface
     {
 
         mylocals.localcrime += crimeIncreased;
-
+        if (heroSelectButton.activeInHierarchy == false)
+        {
+          heroSelectButton.SetActive(true);
+        }
     }
 
     public void OpenPanel(GameObject panel)
@@ -35,5 +39,6 @@ public class EventCrime : MonoBehaviour,IEventInterface
         panel.SetActive(true);
         eventNametxt.text = eventName;
         desctxt.text      = description;
+        crimetxt.text     =$"Aumento criminal: {crimeIncreased} no {mylocals.localName}!!";
     }
 }

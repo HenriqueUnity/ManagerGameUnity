@@ -16,6 +16,5 @@ MonoBehaviour:
   power: 832
   payday: 1300
   cost: 11000
-  fatigue: 1
-  fatiguemax: 0
+  fame: 800
   heroName: Big Boss

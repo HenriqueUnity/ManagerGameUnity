@@ -16,6 +16,5 @@ MonoBehaviour:
   power: 303
   payday: 500
   cost: 1200
-  fatigue: 1
-  fatiguemax: 0
+  fame: 50
   heroName: Morte Estelar

@@ -9,6 +9,7 @@ public class Contract : ScriptableObject
     public string contractName;
     public bool Isactive=false;
     public string contractdescription;
+    public List<int> fameForUpgrade;
    
     
 }

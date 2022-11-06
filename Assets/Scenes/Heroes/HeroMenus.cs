@@ -8,7 +8,7 @@ using System.Linq;
 public class HeroMenus : MonoBehaviour
 {
     public NewHero hero;
-    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt;
+    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt,fametxt;
     [SerializeField] bool inStore;
     public bool checkhero;
     private Main_Script main_Script;
@@ -46,9 +46,10 @@ public class HeroMenus : MonoBehaviour
 
         if (checkhero)
         {
-            nametxt.text = "Nome: " + hero.heroName;
-            powertxt.text = "Poder: " + hero.power.ToString();
-            paydaytxt.text = "Salário: " + hero.payday.ToString();
+            nametxt.text = $"Nome: {hero.heroName}";
+            powertxt.text  = $"Poder: {hero.power}";
+            paydaytxt.text = $"Salário: {hero.payday}";
+            fametxt.text   = $"Fama: {hero.fame}";
             if (inStore)
             {
                 costtxt.text = $"Valor: {hero.cost}";
@@ -59,8 +60,13 @@ public class HeroMenus : MonoBehaviour
             nametxt.text   = " ";
             powertxt.text  = " ";
             paydaytxt.text = " ";
+            fametxt.text   = " ";
         }
 
+    }
+    public void ContractHero()
+    {
+        hero.ContractHero(hero);
     }
 
           public void NewHeroStats(NewHero newhero)

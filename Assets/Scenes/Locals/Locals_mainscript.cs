@@ -8,14 +8,21 @@ public class Locals_mainscript : MonoBehaviour
 {
     
     [SerializeField]NewLocals mylocal;
-    public int localcrime;
+    public int localcrime,fameUpgrade;
     [SerializeField] TextMeshProUGUI crimetxt, nametxt;
     public LocalHero myLocalhero;
+    public string localName;
     bool firststart=true;
     [SerializeField] GameObject messageerro;
     [SerializeField] RectTransform posicaomensagem;
     public HeroChooseMenus chooseMenu;
 
+    public bool LocalReachZero;
+
+    [Header("Report Variables")]
+    public int heroPowerReport, localCrimeReport;
+    public bool noheroReport =false;
+    public string heroName;
     
     
 
@@ -24,6 +31,7 @@ public class Locals_mainscript : MonoBehaviour
     {
         myLocalhero = GetComponentInChildren<LocalHero>();    
         
+        
     }
 
     
@@ -31,9 +39,11 @@ public class Locals_mainscript : MonoBehaviour
     {
         if (firststart)
         {
-            localcrime = mylocal.localcrime;
+            localcrime   = mylocal.localcrime;
             nametxt.text = mylocal.localname;
-            firststart=false;   
+            firststart   = false;  
+            localName    = mylocal.localname;
+            localCrimeReport = localcrime;
         }
             crimetxt.text = $"Crime local: {localcrime}";
        
@@ -50,15 +60,21 @@ public class Locals_mainscript : MonoBehaviour
     //Crime - HeroPower
     public void StartCrimeFight(NewHero herotofight)
     {
-        herotofight.fatigue -= 1;
-        localcrime -= herotofight.power;
-        if(localcrime < 0)
+        localCrimeReport = localcrime;
+        heroPowerReport  = herotofight.power;
+        heroName = herotofight.heroName;
+
+        localcrime      -= herotofight.power;
+        if(localcrime <= 0)
         {
             localcrime = 0;
+            LocalReachZero = true;
+            GetComponentInChildren<LocalReachzero>().LocalHasReachZero();
         }
     }
    public void CallSetHero()
     {
         myLocalhero.localhero1 = SetHero(); 
     }
+    
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Heroes : ScriptableObject
 {
-    public int id,power, payday, cost, fatigue,fatiguemax;
+    public int id,power, payday, cost,fame;
     public string heroName;
     
     

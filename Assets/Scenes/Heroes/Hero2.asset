@@ -16,6 +16,5 @@ MonoBehaviour:
   power: 125
   payday: 210
   cost: 500
-  fatigue: 2
-  fatiguemax: 0
+  fame: 125
   heroName: Salvador
