@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class NewHero : MonoBehaviour
 {
@@ -9,12 +10,10 @@ public class NewHero : MonoBehaviour
     public int power, payday, cost ,Id,fame;
     public string heroName;
     [SerializeField] Main_Script main_Script;
-    
+    public SpriteRenderer HeroImage;
     void Start()
     {
-       
         
-
         power    = myHero.power;
         payday   = myHero.payday;
         heroName = myHero.heroName;

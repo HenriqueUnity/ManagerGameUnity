@@ -29,6 +29,8 @@ public class Main_Script : MonoBehaviour
     [SerializeField] ContractsMenus MycontractMenu;
     [SerializeField] GameObject ReportPanel;
     [SerializeField] StoreManager storeManager;
+
+    [SerializeField] FameUpgradeButton[] fameUpgrades;
     
     
     private bool repeathero, repeathero1, repeathero2, repeathero3;
@@ -145,6 +147,7 @@ public class Main_Script : MonoBehaviour
         TotalEconomy(); 
           TotalCrime();
         ResetAllLocalhero();
+        UpgradesCheck();
         //Nextday Button hide for a moment
         
         StartCoroutine(ButtonHide());
@@ -271,5 +274,11 @@ public class Main_Script : MonoBehaviour
     {
         eventManager.EventController(day);
     }
+    public void UpgradesCheck()
+    {
+        for(int i = 0; i < fameUpgrades.Length; i++)
+        fameUpgrades[i].CheckUpgradefame();
+    }
 }
+
 

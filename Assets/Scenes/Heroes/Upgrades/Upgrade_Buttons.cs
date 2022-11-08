@@ -8,6 +8,7 @@ public class Upgrade_Buttons : MonoBehaviour
     [SerializeField] Button[] buttonSlotUpgrade;
     [SerializeField] Main_Script MyMainScript;
     [SerializeField] Upgrademanager Myupgrademanager;
+    [SerializeField] HerosSlotController MyheroSlot;
     private int currentUpgrade;
     private int currentUpgradeCost;
     private void Start()
@@ -25,6 +26,7 @@ public class Upgrade_Buttons : MonoBehaviour
             buttonSlotUpgrade[currentUpgrade+1].interactable = true;
             }
             Myupgrademanager.HeroSlotUpgrade();
+            MyheroSlot.SlotUpgrade();
             currentUpgrade++;
             MyMainScript.money -= currentUpgradeCost;
             currentUpgradeCost *= 2;

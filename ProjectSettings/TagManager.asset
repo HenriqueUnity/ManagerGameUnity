@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HeroImages
+    uniqueID: 2054742887
+    locked: 0

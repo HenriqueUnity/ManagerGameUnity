@@ -8,12 +8,13 @@ using System.Linq;
 public class HeroMenus : MonoBehaviour
 {
     public NewHero hero;
-    [SerializeField]TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt,fametxt;
+    [SerializeField] TextMeshProUGUI nametxt, powertxt, paydaytxt,costtxt,fametxt;
     [SerializeField] bool inStore;
     public bool checkhero;
     private Main_Script main_Script;
     private int i=0;
-    [SerializeField]LocalHero _LocalHero;
+    [SerializeField] LocalHero _LocalHero;
+    [SerializeField] Image _SpriteRenderer;
     void Start()
     {
       
@@ -54,6 +55,9 @@ public class HeroMenus : MonoBehaviour
             {
                 costtxt.text = $"Valor: {hero.cost}";
             }
+            else
+             _SpriteRenderer.sprite = hero.HeroImage.sprite;
+            
         }
         else
         {
